@@ -1,5 +1,9 @@
 # Omni Upscale
 
+[![Latest release](https://img.shields.io/github/v/release/Stringadmin/omni-upscale)](https://github.com/Stringadmin/omni-upscale/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows%20x64-lightgrey)](#)
+
 从 OmniAI 漫画工作台里抽出来的**独立超分工具**，只做一件事：把图片和视频放大、补细节。
 
 不带项目库、素材库、聊天、账号体系——启动即用，全程离线。
@@ -46,6 +50,14 @@
 - **自适应**：dock 控件在 1180 / 1024 两档宽度自动收紧，矮窗口收缩队列高度，1600+ 大屏放宽留白。最小可用窗口 960×640。
 
 授权明细见 `THIRD-PARTY-NOTICES.md`。
+
+## 下载
+
+到 [Releases](https://github.com/Stringadmin/omni-upscale/releases/latest) 下载 `OmniUpscale-Setup-X.X.X.exe`，双击安装。
+
+安装包已内置 ffmpeg 与 Real-ESRGAN 运行时（约 170 MB），装完直接用，不需要再下载任何东西。
+
+想从源码跑，见下一节。
 
 ## 运行
 

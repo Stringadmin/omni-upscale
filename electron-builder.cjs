@@ -25,6 +25,17 @@ module.exports = {
     '!**/*.test.js'
   ],
   extraResources: [
+    // 授权文件随包分发，满足 MIT / BSD / GPL 的声明保留要求
+    {
+      from: 'LICENSE',
+      to: 'LICENSE.txt',
+      filter: ['**/*']
+    },
+    {
+      from: 'THIRD-PARTY-NOTICES.md',
+      to: 'THIRD-PARTY-NOTICES.md',
+      filter: ['**/*']
+    },
     {
       from: 'resources/realesrgan',
       to: 'realesrgan',
