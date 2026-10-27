@@ -53,17 +53,35 @@
 
 ## 下载
 
-到 [Releases](https://github.com/Stringadmin/omni-upscale/releases/latest) 下载 `OmniUpscale-Setup-X.X.X.exe`，双击安装。
+到 [Releases](https://github.com/Stringadmin/omni-upscale/releases/latest) 按需要挑一个：
 
-安装包已内置 ffmpeg 与 Real-ESRGAN 运行时（约 170 MB），装完直接用，不需要再下载任何东西。
+| 文件 | 大小 | 说明 |
+| --- | --- | --- |
+| `OmniUpscale-Setup-1.0.0.exe` | 170 MB | 安装版，可选安装目录，带卸载与开始菜单项 |
+| `OmniUpscale-1.0.0-win-x64-portable.zip` | 210 MB | 绿色版，解压后直接跑 `Omni Upscale.exe`，不写注册表 |
+| `omni-upscale-runtime.zip` | 63 MB | 只有运行时（ffmpeg + 4 个模型），给源码构建用 |
 
-想从源码跑，见下一节。
+前两个都已内置运行时，下载即用。
 
 ## 运行
 
 ```bash
+git clone https://github.com/Stringadmin/omni-upscale.git
+cd omni-upscale
 npm install
 npm start
+```
+
+首次运行前需要先准备运行时（ffmpeg + 模型），在 PowerShell 里执行：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/fetch-runtime.ps1
+```
+
+脚本会优先从本项目的 Release 拉 `omni-upscale-runtime.zip`（国内比 gyan.dev 稳），失败再回退官方源。网络慢就加代理：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/fetch-runtime.ps1 -Proxy http://127.0.0.1:65533
 ```
 
 ## 打包 Windows 安装包
