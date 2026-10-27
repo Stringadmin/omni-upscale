@@ -1,0 +1,13 @@
+node_modules/
+release/
+dist/
+*.log
+temp/
+.DS_Store
+Thumbs.db
+
+# 运行时二进制：体积过大（ffmpeg 62MB + 模型 51MB），不进 git。
+# 首次 clone 后执行 scripts/fetch-runtime.ps1 下载到本地。
+resources/ffmpeg/
+resources/realesrgan/
+resources/realcugan/

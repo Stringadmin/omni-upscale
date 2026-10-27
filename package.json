@@ -1,0 +1,22 @@
+{
+  "name": "omni-upscale",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Omni Upscale - 本地离线批量图片 / 视频超分工具",
+  "author": "OmniAI",
+  "license": "MIT",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "package:win": "electron-builder --win --config electron-builder.cjs",
+    "package:dir": "electron-builder --dir --config electron-builder.cjs"
+  },
+  "devDependencies": {
+    "@floating-ui/dom": "^1.8.0",
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3",
+    "lucide-static": "^1.62.0",
+    "plyr": "^3.8.4"
+  }
+}
