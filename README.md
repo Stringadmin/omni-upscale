@@ -93,9 +93,33 @@ resources/
   ffmpeg/ffmpeg.exe     约 62 MB
 ```
 
-## 可选引擎：Real-CUGAN
+## 模型与运行时
 
-仓库里**不含** Real-CUGAN 运行时。要启用，把文件放成这个结构即可，界面会自动点亮：
+仓库**不包含**二进制文件，全部从官方渠道获取。执行 `scripts/fetch-runtime.ps1` 会自动下载前两项。
+
+### Real-ESRGAN —— BSD-3-Clause
+
+- 项目主页：https://github.com/xinntao/Real-ESRGAN
+- 运行时 + 模型（Windows 包）：https://github.com/xinntao/Real-ESRGAN/releases/tag/v0.2.5.0
+- 论文：https://arxiv.org/abs/2107.10833
+
+包内 4 个模型：
+
+| 模型文件 | 适用素材 | 支持倍率 |
+| --- | --- | --- |
+| `realesr-animevideov3-x2 / x3 / x4` | 动漫、3D 动画 | 2x / 3x / 4x |
+| `realesrgan-x4plus-anime` | 静帧插画、漫画线稿 | 4x |
+| `realesrgan-x4plus` | 实拍、半写实 | 4x |
+| `realesrnet-x4plus` | 保守处理、少伪影 | 4x |
+
+**替换模型**：把 `.bin` / `.param` 丢进 `resources/realesrgan/models/`，文件名与上表一致即可被识别。安装后对应 `<安装目录>/resources/realesrgan/models/`，不需要重新打包。
+
+### Real-CUGAN —— MIT（可选引擎）
+
+- 项目主页：https://github.com/nihui/realcugan-ncnn-vulkan
+- 发布页（含 models-se / models-pro）：https://github.com/nihui/realcugan-ncnn-vulkan/releases
+
+放到这样的结构，界面会自动点亮：
 
 ```
 resources/realcugan/
@@ -105,12 +129,17 @@ resources/realcugan/
     *.param
 ```
 
-## 资源说明
+### FFmpeg —— GPL
 
-- `resources/realesrgan` 来自 [xinntao/Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)（BSD-3-Clause）
-- `resources/ffmpeg/ffmpeg.exe` 为 GPL 构建版本
+- 官网：https://ffmpeg.org
+- Windows 构建：https://www.gyan.dev/ffmpeg/builds/ 或 https://github.com/BtbN/FFmpeg-Builds/releases
 
-打包时这两个目录通过 `extraResources` 放到 `app.asar` 之外，用户可以直接替换模型文件而不用重新打包。
+### 字体与前端依赖
+
+- Noto Sans SC（SIL OFL 1.1）：https://fonts.google.com/noto/specimen/Noto+Sans+SC
+- Lucide（ISC）：https://lucide.dev
+- Plyr（MIT）：https://plyr.io
+- Floating UI（MIT）：https://floating-ui.com
 
 ## 关于显卡
 
@@ -144,3 +173,24 @@ AI 超分走 Real-ESRGAN 的 ncnn-vulkan 后端，**必须要有可用的 Vulkan
 **耗时**：与帧数成正比。10 秒 1080p 约 240 帧，视显卡不同需要几分钟到几十分钟。
 
 **平台**：仅提供 Windows x64 构建（`resources/` 里只有 Windows 二进制）。
+
+## 许可证
+
+本项目代码采用 **[MIT License](LICENSE)**，**允许商业使用**、修改、分发与私有化部署，只需在副本中保留版权与许可声明。
+
+| 组成 | 授权 | 可商用 | 备注 |
+| --- | --- | --- | --- |
+| 本项目代码 | MIT | ✅ | 无附加限制 |
+| Real-ESRGAN 运行时与模型 | BSD-3-Clause | ✅ | 保留版权声明即可 |
+| Real-CUGAN | MIT | ✅ | 可选组件 |
+| FFmpeg（随包构建） | GPL v3 | ✅ | 分发时需履行 GPL 义务 |
+| Noto Sans SC | SIL OFL 1.1 | ✅ | 可嵌入、可再分发 |
+| Lucide / Plyr / Floating UI | ISC / MIT / MIT | ✅ | 前端依赖 |
+
+### 关于 FFmpeg 的 GPL
+
+随安装包分发的是 **GPL 构建**的 `ffmpeg.exe`。本项目只以子进程方式调用，未修改、未链接其源码，属于独立程序的聚合分发——你的代码不必开源。
+
+但**对外分发安装包时**需要履行 GPL 义务：提供该 FFmpeg 构建的源码获取方式（https://ffmpeg.org/download.html）。自己内部使用不触发分发条款。
+
+想完全避开 GPL，可以换成 LGPL 构建，但要注意代价：**LGPL 版不含 `libx264`**，而本项目的软件编码依赖它。换掉之后只有具备 NVENC / QSV / AMF 硬件编码器的机器才能输出视频，纯 CPU 环境会失败。多数情况下保留 GPL 版 + 附上源码链接是更实际的选择。

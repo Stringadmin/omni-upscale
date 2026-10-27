@@ -1,6 +1,18 @@
 # 第三方组件与授权
 
-本项目的界面与运行时依赖以下开源资源，均为可商用授权。
+本项目自身代码采用 [MIT License](LICENSE)，允许商业使用。下列第三方资源**均为可商用授权**，但各自的条件不同：
+
+| 组件 | 授权 | 可商用 | 分发时的义务 |
+| --- | --- | --- | --- |
+| Real-ESRGAN（运行时 + 模型） | BSD-3-Clause | ✅ | 保留版权与免责声明 |
+| Real-CUGAN（可选） | MIT | ✅ | 保留版权声明 |
+| FFmpeg（随包构建） | GPL v3 | ✅ | 需提供对应源码获取方式 |
+| Noto Sans SC | SIL OFL 1.1 | ✅ | 保留许可、不得单独售卖字体 |
+| Lucide | ISC | ✅ | 保留版权声明 |
+| Plyr | MIT | ✅ | 保留版权声明 |
+| Floating UI | MIT | ✅ | 保留版权声明 |
+
+> 项目自身代码是 MIT；上面这些是它依赖的第三方部分，**不改变本项目代码的授权**。
 
 ## 图标 — Lucide
 
@@ -35,6 +47,19 @@
 
 ## 视频处理 — FFmpeg
 
-- 授权：GPL（所附构建）
+- 授权：GPL v3（所附构建）
 - 站点：https://ffmpeg.org
-- 用法：`resources/ffmpeg/ffmpeg.exe` 原样分发，通过子进程调用。
+- 用法：`resources/ffmpeg/ffmpeg.exe` 原样分发，通过 `child_process` 调用，未修改源码、未做动态链接。
+
+### 分发时的 GPL 义务
+
+只在进程边界调用 FFmpeg，本项目代码不需要开源。但**对外分发安装包**（含企业内部分发）时，需要随附该 FFmpeg 构建的源码获取方式：
+
+- 官方源码：https://ffmpeg.org/download.html
+- 所用构建的来源：https://www.gyan.dev/ffmpeg/builds/（essentials 构建）
+
+仅自己使用、不对外分发时不触发该条款。
+
+### 想避开 GPL？
+
+换成 LGPL 构建即可，但要知道代价：**LGPL 版不含 libx264**，而本项目的软件编码路径依赖它。换掉之后只有带 NVENC / QSV / AMF 硬件编码器的机器能输出视频，纯 CPU 环境会直接失败。实际项目中保留 GPL 版 + 附源码链接通常更稳妥。
